@@ -10,12 +10,29 @@ body {
   display: flex; /* Use flexbox for easy side-by-side layout */
 }
 
-.content, .preview {
-  width: 48%; /* Each div occupies 50% of the container's width */
+/* .content, .preview {
+  width: 50%; /* Each div occupies 50% of the container's width */
   border: 1px solid black; /* Optional: Add borders for visual clarity */
   padding: 10px; /* Optional: Add padding for spacing within divs */
+} */
+
+.content {
+    flex: 1;
+    padding: 2em;
+    overflow-y: auto;
+    background: #f1f1f1;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
+.preview {
+    flex: 1;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 2px solid #ddd;
+    padding: 1em;
+}
 
 /* Container for both sections */
 /* .content, .preview {
