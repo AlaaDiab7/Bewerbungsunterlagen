@@ -5,8 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mein Portfolio</title>
     <link rel="stylesheet" href="style.css">
-</head>
+    <style>
+        .container {
+            display: flex;
+            height: 100vh;
+        }
 
+        .content {
+            flex: 1;
+            padding: 1em;
+            overflow-y: auto;
+            background: #f4f4f4;
+        }
+
+        .preview {
+            flex: 1;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #pdf-canvas {
+            width: 100%;
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+
+        .controls {
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background: #0073e6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .controls button:hover {
+            background: #005bb5;
+        }
+
+        #page-info {
+            margin: 0 10px;
+        }
+    </style>
+</head>
 <body>
     <div class="container">
         <div class="content">
@@ -18,47 +69,46 @@
                 <section id="certificates">
                     <h2>Zertifikate</h2>
                     <ul id="certificate-list">
-                        <li><a href="#" onclick="loadPdf('https://github.com/AlaaDiab7/Bewerbungsunterlagen/blob/main/certificates/Zeugnisse_Alaa_Diab.pdf')">Uni Zeugnisse</a></li>
-                        <li><a href="#" onclick="loadPdf('certificates/cert2.pdf')">Programmierung Zertifikate</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/Zeugnisse_Alaa_Diab.pdf')">Uni Zeugnisse</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/Programming_Certificate.pdf')">Programmier-Zertifikate</a></li>
                         <li><a href="#" onclick="loadPdf('certificates/cert3.pdf')">Simulation Zertifikate</a></li>
                     </ul>
                 </section>
 
-                <section id="recommendations">
-                    <h2>Empfehlungen</h2>
-                    <ul id="recommendation-list">
-                        <li><a href="#" onclick="loadPdf('certificates/rec1.pdf')">Empfehlungsschreiben 1</a></li>
-                        <li><a href="#" onclick="loadPdf('certificates/rec2.pdf')">Empfehlungsschreiben 2</a></li>
-                    </ul>
-                </section>
+                
+            <section id="recommendations">
+                <h2>Empfehlungen</h2>
+                <ul id="recommendation-list">
+                    <li><a href="#" onmouseover="previewCertificate('rec1.pdf')">Empfehlungsschreiben 1</a></li>
+                    <li><a href="#" onmouseover="previewCertificate('rec2.pdf')">Empfehlungsschreiben 2</a></li>
+                </ul>
+            </section>
 
-                <section id="publications">
-                    <h2>Publikationen und Forschungen</h2>
-                    <ul id="publication-list">
-                        <li><a href="#" onclick="loadPdf('certificates/pub1.pdf')">Publikation 1</a></li>
-                        <li><a href="#" onclick="loadPdf('certificates/pub2.pdf')">Publikation 2</a></li>
-                    </ul>
-                </section>
+            <section id="publications">
+                <h2>Publikationen und Forschungen</h2>
+                <ul id="publication-list">
+                    <li><a href="#" onmouseover="previewCertificate('pub1.pdf')">Publikation 1</a></li>
+                    <li><a href="#" onmouseover="previewCertificate('pub2.pdf')">Publikation 2</a></li>
+                </ul>
+            </section>
+                
             </main>
         </div>
         <div class="preview">
-            <div class="controls">
-                <button onclick="prevPage()">Vorherige Seite</button>
-                <button onclick="nextPage()">Nächste Seite</button>
-                <span>Seite <span id="page-num">1</span> von <span id="page-count">1</span></span>
-            </div>
             <canvas id="pdf-canvas"></canvas>
+            <div class="controls">
+                <button onclick="prevPage()">Zurück</button>
+                <span id="page-info">Seite <span id="page-num"></span> von <span id="page-count"></span></span>
+                <button onclick="nextPage()">Weiter</button>
+            </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Mein Portfolio. Alle Rechte vorbehalten.</p>
-    </footer>
+    <script type="module">
+        import * as pdfjsLib from './build/pdf.mjs';
 
+        pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.1.1/pdf.min.js"></script>
-
-    <script>
         let pdfDoc = null,
             pageNum = 1,
             pageRendering = false,
@@ -67,29 +117,22 @@
             canvas = document.getElementById('pdf-canvas'),
             ctx = canvas.getContext('2d');
 
-        document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('mouseover', () => {
-            link.style.color = '#ff5722';
-        });
-        link.addEventListener('mouseout', () => {
-            link.style.color = '';
-        });
-        });
-
-        
         function renderPage(num) {
             pageRendering = true;
-            pdfDoc.getPage(num).then(function(page) {
+
+            pdfDoc.getPage(num).then(page => {
                 const viewport = page.getViewport({ scale });
-                canvas.height = viewport.height;
                 canvas.width = viewport.width;
+                canvas.height = viewport.height;
 
                 const renderContext = {
                     canvasContext: ctx,
                     viewport: viewport,
                 };
 
-                page.render(renderContext).promise.then(function() {
+                const renderTask = page.render(renderContext);
+
+                renderTask.promise.then(() => {
                     pageRendering = false;
                     if (pageNumPending !== null) {
                         renderPage(pageNumPending);
@@ -126,7 +169,7 @@
         }
 
         function loadPdf(url) {
-            pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+            pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
                 pdfDoc = pdfDoc_;
                 document.getElementById('page-count').textContent = pdfDoc.numPages;
                 pageNum = 1;
@@ -134,11 +177,5 @@
             });
         }
     </script>
-
-
-
 </body>
 </html>
-
-
-
