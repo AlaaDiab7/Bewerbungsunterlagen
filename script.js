@@ -15,7 +15,7 @@ document.querySelectorAll('a').forEach(link => {
 
 function previewCertificate(fileName) {
     const iframe = document.getElementById('pdfPreview');
-    iframe.src = `certificates/${fileName}`;
+    iframe.src = `viewer.html?file=certificates/${fileName}`; 
 }
 
 function clearPreview() {
