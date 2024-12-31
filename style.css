@@ -1,29 +1,51 @@
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
+    background-color: #f9f9f9;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
+    color: #333;
 }
 
 header {
-    background: #0073e6;
+    background: linear-gradient(135deg, #4a90e2, #0073e6);
     color: white;
-    padding: 1em 0;
+    padding: 2em 0;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
     margin: 0;
-    font-size: 2em;
+    font-size: 2.5em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1.2em;
+    margin: 0.5em 0 0;
 }
 
 main {
     padding: 2em;
 }
 
-#certificates h2 {
-    color: #333;
+section {
+    margin-bottom: 2em;
+    padding: 1.5em;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+section:hover {
+    transform: scale(1.02);
+}
+
+h2 {
+    color: #0073e6;
+    border-bottom: 2px solid #0073e6;
+    padding-bottom: 0.3em;
+    margin-bottom: 1em;
 }
 
 ul {
@@ -38,7 +60,8 @@ ul li {
 ul li a {
     text-decoration: none;
     color: #0073e6;
-    transition: color 0.3s ease-in-out;
+    font-weight: bold;
+    transition: color 0.3s;
 }
 
 ul li a:hover {
@@ -51,4 +74,10 @@ footer {
     background: #333;
     color: white;
     position: fixed;
-    width: 100%;\n    bottom: 0;\n}
+    bottom: 0;
+    width: 100%;
+}
+
+a {
+    cursor: pointer;
+}
