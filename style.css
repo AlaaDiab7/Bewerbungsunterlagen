@@ -6,13 +6,24 @@ body {
     color: #333;
 }
 
-/* Container for both sections */
+.container {
+  display: flex; /* Use flexbox for easy side-by-side layout */
+}
+
 .content, .preview {
+  width: 50%; /* Each div occupies 50% of the container's width */
+  border: 1px solid black; /* Optional: Add borders for visual clarity */
+  padding: 10px; /* Optional: Add padding for spacing within divs */
+}
+
+
+/* Container for both sections */
+/*.content, .preview {
     flex: 1; /* Each takes up 50% of the screen */
     padding: 1em;
     box-sizing: border-box; /* Ensure padding doesn't affect width */
     overflow-y: auto; /* Enable scrolling if content is too tall */
-}
+} */
 
 /* Left-side (Certificate List) */
 .content {
