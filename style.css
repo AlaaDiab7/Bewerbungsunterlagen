@@ -7,70 +7,41 @@ body {
 }
 
 .container {
-  display: flex; /* Use flexbox for easy side-by-side layout */
-}
-
-/* .content, .preview {
-  width: 50%; /* Each div occupies 50% of the container's width */
-  border: 1px solid black; /* Optional: Add borders for visual clarity */
-  padding: 10px; /* Optional: Add padding for spacing within divs */
-} */
-
-.content {
-    flex: 1;
-    padding: 2em;
-    overflow-y: auto;
-    background: #f1f1f1;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.preview {
-    flex: 1;
-    background: #fff;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    border-left: 2px solid #ddd;
-    padding: 1em;
+    width: 100%; /* Ensure the container spans the full width of the page */
 }
 
-/* Container for both sections */
-/* .content, .preview {
-    flex: 1; /* Each takes up 50% of the screen */
-    padding: 1em;
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
-    overflow-y: auto; /* Enable scrolling if content is too tall */
-} 
-*/
+.content, .preview {
+    flex: 0 0 50%; /* Each section takes 50% of the width */
+    overflow-y: auto;
+    box-sizing: border-box; /* Ensure padding and borders don't affect width */
+}
 
 /* Left-side (Certificate List) */
 .content {
+    padding: 2em;
     background-color: #f9f9f9;
-   /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
+    border-right: 2px solid #ddd; /* Add a border between sections */
 }
 
 /* Right-side (PDF Viewer) */
 .preview {
-    background-color: white;
-    border-left: 2px solid #ddd;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
+    justify-content: flex-start;
     padding: 1em;
+    background-color: white;
 }
 
-/* Space between the sections */
-body {
-    gap: 20px; /* Add spacing between the two sections */
-}
-
-/* PDF Canvas Styling */
+/* Canvas Styling */
 .preview canvas {
+    width: auto;
+    height: auto;
+    max-width: 100%; /* Prevent the canvas from exceeding the container width */
+    max-height: 90%; /* Prevent it from overflowing vertically */
     border: 1px solid #ccc;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
-    max-height: 100%;
 }
 
 /* Navigation Controls */
@@ -96,6 +67,7 @@ body {
     background-color: #005bb5;
 }
 
+/* ---------------------------------------------------- */
 /* Header Styling */
 header {
     background: linear-gradient(135deg, #4a90e2, #0073e6);
