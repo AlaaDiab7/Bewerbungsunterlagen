@@ -3,26 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Mein Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to My Portfolio</h1>
-        <p>Here you will find my certificates and other application materials.</p>
+        <h1>Willkommen in meinem Portfolio</h1>
+        <p>Hier finden Sie meine Zertifikate und weitere Bewerbungsunterlagen.</p>
     </header>
     <main>
         <section id="certificates">
-            <h2>Certificates</h2>
+            <h2>Zertifikate</h2>
             <ul id="certificate-list">
                 <li><a href="#" onclick="openCertificate('Zeugnisse_Alaa_Diab.pdf')">Uni Zeugnisse</a></li>
                 <li><a href="#" onclick="openCertificate('cert2.pdf')">Prograqmming Zertifikate</a></li>
                 <li><a href="#" onclick="openCertificate('cert3.pdf')">Simulation Zertifikate</a></li>
             </ul>
         </section>
+
+        <section id="recommendations">
+            <h2>Empfehlungen</h2>
+            <ul id="recommendation-list">
+                <li><a href="#" onclick="openCertificate('rec1.pdf')">Empfehlungsschreiben 1</a></li>
+                <li><a href="#" onclick="openCertificate('rec2.pdf')">Empfehlungsschreiben 2</a></li>
+            </ul>
+        </section>
+
+        <section id="publications">
+            <h2>Publikationen und Forschungen</h2>
+            <ul id="publication-list">
+                <li><a href="#" onclick="openCertificate('pub1.pdf')">Publikation 1</a></li>
+                <li><a href="#" onclick="openCertificate('pub2.pdf')">Publikation 2</a></li>
+            </ul>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2024 My Portfolio. All rights reserved.</p>
+        <p>&copy; 2024 Mein Portfolio. Alle Rechte vorbehalten.</p>
     </footer>
 
     <script src="script.js"></script>
