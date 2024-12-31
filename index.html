@@ -104,78 +104,84 @@
         </div>
     </div>
 
-    <script type="module">
-        import * as pdfjsLib from './build/pdf.mjs';
+<script type="module">
+    import * as pdfjsLib from './build/pdf.mjs';
 
-        pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
 
-        let pdfDoc = null,
-            pageNum = 1,
-            pageRendering = false,
-            pageNumPending = null,
-            scale = 1.0,
-            canvas = document.getElementById('pdf-canvas'),
-            ctx = canvas.getContext('2d');
+    let pdfDoc = null,
+        pageNum = 1,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1.0,
+        canvas = document.getElementById('pdf-canvas'),
+        ctx = canvas.getContext('2d');
 
-        function renderPage(num) {
-            pageRendering = true;
+    function renderPage(num) {
+        pageRendering = true;
 
-            pdfDoc.getPage(num).then(page => {
-                const viewport = page.getViewport({ scale });
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
+        pdfDoc.getPage(num).then(page => {
+            const viewport = page.getViewport({ scale });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
 
-                const renderContext = {
-                    canvasContext: ctx,
-                    viewport: viewport,
-                };
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport,
+            };
 
-                const renderTask = page.render(renderContext);
+            const renderTask = page.render(renderContext);
 
-                renderTask.promise.then(() => {
-                    pageRendering = false;
-                    if (pageNumPending !== null) {
-                        renderPage(pageNumPending);
-                        pageNumPending = null;
-                    }
-                });
+            renderTask.promise.then(() => {
+                pageRendering = false;
+                if (pageNumPending !== null) {
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
             });
+        });
 
-            document.getElementById('page-num').textContent = num;
-        }
+        document.getElementById('page-num').textContent = num;
+    }
 
-        function queueRenderPage(num) {
-            if (pageRendering) {
-                pageNumPending = num;
-            } else {
-                renderPage(num);
-            }
+    function queueRenderPage(num) {
+        if (pageRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
         }
+    }
 
-        function prevPage() {
-            if (pageNum <= 1) {
-                return;
-            }
-            pageNum--;
-            queueRenderPage(pageNum);
+    function prevPage() {
+        if (pageNum <= 1) {
+            return;
         }
+        pageNum--;
+        queueRenderPage(pageNum);
+    }
 
-        function nextPage() {
-            if (pageNum >= pdfDoc.numPages) {
-                return;
-            }
-            pageNum++;
-            queueRenderPage(pageNum);
+    function nextPage() {
+        if (pageNum >= pdfDoc.numPages) {
+            return;
         }
+        pageNum++;
+        queueRenderPage(pageNum);
+    }
 
-        function loadPdf(url) {
-            pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
-                pdfDoc = pdfDoc_;
-                document.getElementById('page-count').textContent = pdfDoc.numPages;
-                pageNum = 1;
-                renderPage(pageNum);
-            });
-        }
-    </script>
+    function loadPdf(url) {
+        pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
+            pdfDoc = pdfDoc_;
+            document.getElementById('page-count').textContent = pdfDoc.numPages;
+            pageNum = 1;
+            renderPage(pageNum);
+        });
+    }
+
+    // Expose functions globally
+    window.loadPdf = loadPdf;
+    window.prevPage = prevPage;
+    window.nextPage = nextPage;
+</script>
+    
 </body>
 </html>
