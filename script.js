@@ -11,3 +11,14 @@ document.querySelectorAll('a').forEach(link => {
         link.style.color = '';
     });
 });
+
+
+function previewCertificate(fileName) {
+    const iframe = document.getElementById('pdfPreview');
+    iframe.src = `certificates/${fileName}`;
+}
+
+function clearPreview() {
+    const iframe = document.getElementById('pdfPreview');
+    iframe.src = "";
+}
