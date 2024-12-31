@@ -6,8 +6,8 @@
     <title>Mein Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
+<body>
     <div class="container">
         <div class="content">
             <header>
@@ -18,31 +18,36 @@
                 <section id="certificates">
                     <h2>Zertifikate</h2>
                     <ul id="certificate-list">
-                        <li><a href="https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Zeugnisse_Alaa_Diab.pdf" onmouseover="previewCertificate('Zeugnisse_Alaa_Diab.pdf')" onclick="openCertificate('Zeugnisse_Alaa_Diab.pdf')">Uni Zeugnisse</a></li>
-                        <li><a href="#" onmouseover="previewCertificate('cert2.pdf')">Prograqmming Zertifikate</a></li>
-                        <li><a href="#" onmouseover="previewCertificate('cert3.pdf')">Simulation Zertifikate</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/Zeugnisse_Alaa_Diab.pdf')">Uni Zeugnisse</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/cert2.pdf')">Programmierung Zertifikate</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/cert3.pdf')">Simulation Zertifikate</a></li>
                     </ul>
                 </section>
 
                 <section id="recommendations">
                     <h2>Empfehlungen</h2>
                     <ul id="recommendation-list">
-                        <li><a href="#" onmouseover="previewCertificate('rec1.pdf')">Empfehlungsschreiben 1</a></li>
-                        <li><a href="#" onmouseover="previewCertificate('rec2.pdf')">Empfehlungsschreiben 2</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/rec1.pdf')">Empfehlungsschreiben 1</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/rec2.pdf')">Empfehlungsschreiben 2</a></li>
                     </ul>
                 </section>
 
                 <section id="publications">
                     <h2>Publikationen und Forschungen</h2>
                     <ul id="publication-list">
-                        <li><a href="#" onmouseover="previewCertificate('pub1.pdf')">Publikation 1</a></li>
-                        <li><a href="#" onmouseover="previewCertificate('pub2.pdf')">Publikation 2</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/pub1.pdf')">Publikation 1</a></li>
+                        <li><a href="#" onclick="loadPdf('certificates/pub2.pdf')">Publikation 2</a></li>
                     </ul>
                 </section>
             </main>
         </div>
         <div class="preview">
-            <iframe id="pdfPreview" src=""></iframe>
+            <div class="controls">
+                <button onclick="prevPage()">Vorherige Seite</button>
+                <button onclick="nextPage()">Nächste Seite</button>
+                <span>Seite <span id="page-num">1</span> von <span id="page-count">1</span></span>
+            </div>
+            <canvas id="pdf-canvas"></canvas>
         </div>
     </div>
 
@@ -50,16 +55,80 @@
         <p>&copy; 2024 Mein Portfolio. Alle Rechte vorbehalten.</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf.min.mjs"></script> 
-    <script src="//mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.1.1/pdf.min.js"></script>
 
     <script>
-        function previewCertificate(fileName) {
-            const iframe = document.getElementById('pdfPreview');
-            // Use PDF.js for interactive viewing (replace with your PDF.js integration)
-            iframe.src = `viewer.html?file=certificates/${fileName}`; 
+        let pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.0,
+            canvas = document.getElementById('pdf-canvas'),
+            ctx = canvas.getContext('2d');
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport,
+                };
+
+                page.render(renderContext).promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            document.getElementById('page-num').textContent = num;
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        function prevPage() {
+            if (pageNum <= 1) {
+                return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+
+        function nextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+
+        function loadPdf(url) {
+            pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+                pdfDoc = pdfDoc_;
+                document.getElementById('page-count').textContent = pdfDoc.numPages;
+                pageNum = 1;
+                renderPage(pageNum);
+            });
         }
     </script>
 
+
+
 </body>
 </html>
+
+
+
