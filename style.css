@@ -28,7 +28,7 @@ body {
 /* Left-side (Certificate List) */
 .content {
     background-color: #f9f9f9;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+   /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
 }
 
 /* Right-side (PDF Viewer) */
