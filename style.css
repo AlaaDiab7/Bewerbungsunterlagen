@@ -6,11 +6,11 @@ body {
     color: #333;
 }
 
-.container {
+#container {
   display: flex; /* Use flexbox for easy side-by-side layout */
 }
 
-.content, .preview {
+#content, #preview {
   width: 48%; /* Each div occupies 50% of the container's width */
   border: 1px solid black; /* Optional: Add borders for visual clarity */
   padding: 10px; /* Optional: Add padding for spacing within divs */
