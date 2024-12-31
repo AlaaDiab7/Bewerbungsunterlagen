@@ -13,10 +13,10 @@ document.querySelectorAll('a').forEach(link => {
 });
 
 
-function previewCertificate(fileName) {
-    const iframe = document.getElementById('pdfPreview');
-    iframe.src = `viewer.html?file=certificates/${fileName}`; 
-}
+//function previewCertificate(fileName) {
+//    const iframe = document.getElementById('pdfPreview');
+//    iframe.src = `viewer.html?file=certificates/${fileName}`; 
+//}
 
 function clearPreview() {
     const iframe = document.getElementById('pdfPreview');
