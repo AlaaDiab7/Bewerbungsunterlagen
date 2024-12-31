@@ -109,73 +109,79 @@
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
 
-    let pdfDoc = null,
+    let pdfDoc = null;
+    let pageNum = 1;
+    let scale = 1.5; // Default zoom scale
+    const canvas = document.getElementById("pdf-canvas");
+    const ctx = canvas.getContext("2d");
+    
+    /*let pdfDoc = null,
         pageNum = 1,
-        pageRendering = false,
-        pageNumPending = null,
-        scale = 1.0,
+        //pageRendering = false,
+        //pageNumPending = null,
+        scale = 1.5,
         canvas = document.getElementById('pdf-canvas'),
         ctx = canvas.getContext('2d');
+     */
+    
+  // Load and render the PDF
+async function loadPdf(url) {
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    pdfDoc = pdf;
+    renderPage(pageNum);
+}
 
-    function renderPage(num) {
-        pageRendering = true;
+// Render a page with the current scale
+async function renderPage(num) {
+    const page = await pdfDoc.getPage(num);
+    const viewport = page.getViewport({ scale });
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
 
-        pdfDoc.getPage(num).then(page => {
-            const viewport = page.getViewport({ scale });
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
+    const renderContext = {
+        canvasContext: ctx,
+        viewport: viewport
+    };
+    await page.render(renderContext).promise;
 
-            const renderContext = {
-                canvasContext: ctx,
-                viewport: viewport,
-            };
+    // Update page info
+    document.getElementById("page-info").textContent = `Seite ${pageNum} von ${pdfDoc.numPages}`;
+}
 
-            const renderTask = page.render(renderContext);
+// Navigate to the previous page
+function prevPage() {
+    if (pageNum <= 1) return;
+    pageNum--;
+    renderPage(pageNum);
+}
 
-            renderTask.promise.then(() => {
-                pageRendering = false;
-                if (pageNumPending !== null) {
-                    renderPage(pageNumPending);
-                    pageNumPending = null;
-                }
-            });
-        });
+// Navigate to the next page
+function nextPage() {
+    if (pageNum >= pdfDoc.numPages) return;
+    pageNum++;
+    renderPage(pageNum);
+}
 
-        document.getElementById('page-num').textContent = num;
+// Zoom in by increasing scale
+function zoomIn() {
+    scale += 0.25;
+    renderPage(pageNum);
+}
+
+// Zoom out by decreasing scale
+function zoomOut() {
+    if (scale > 0.5) {
+        scale -= 0.25;
+        renderPage(pageNum);
     }
+}
 
-    function queueRenderPage(num) {
-        if (pageRendering) {
-            pageNumPending = num;
-        } else {
-            renderPage(num);
-        }
-    }
-
-    function prevPage() {
-        if (pageNum <= 1) {
-            return;
-        }
-        pageNum--;
-        queueRenderPage(pageNum);
-    }
-
-    function nextPage() {
-        if (pageNum >= pdfDoc.numPages) {
-            return;
-        }
-        pageNum++;
-        queueRenderPage(pageNum);
-    }
-
-    function loadPdf(url) {
-        pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
-            pdfDoc = pdfDoc_;
-            document.getElementById('page-count').textContent = pdfDoc.numPages;
-            pageNum = 1;
-            renderPage(pageNum);
-        });
-    }
+// Attach zoom controls to mouse clicks
+canvas.addEventListener("click", () => {
+    // Toggle zoom between 1.5x and 2.5x
+    scale = scale === 1.5 ? 2.5 : 1.5;
+    renderPage(pageNum);
+});
 
     // Expose functions globally
     window.loadPdf = loadPdf;
