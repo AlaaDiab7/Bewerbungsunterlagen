@@ -1,106 +1,109 @@
-  body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            color: #333;
-            display: flex;
-            height: 100vh;
-        }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+}
 
-        #content {
-            flex: 1;
-            padding: 2em;
-            overflow-y: auto;
-            background: #f1f1f1;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
+.container {
+    display: flex;
+    width: 100%;
+}
 
-        #preview {
-            flex: 1;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-left: 2px solid #ddd;
-            padding: 1em;
-        }
+.content {
+    flex: 1;
+    padding: 2em;
+    overflow-y: auto;
+    background: #f1f1f1;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
 
-        #preview iframe {
-            width: 90%;
-            height: 90%;
-            border: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+.preview {
+    flex: 1;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 2px solid #ddd;
+}
 
-        header {
-            background: linear-gradient(135deg, #4a90e2, #0073e6);
-            color: white;
-            padding: 1.5em 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+#pdfPreview {
+    width: 90%;
+    height: 90%;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
 
-        header p {
-            font-size: 1em;
-            margin: 0.5em 0 0;
-        }
+header {
+    background: linear-gradient(135deg, #4a90e2, #0073e6);
+    color: white;
+    padding: 1.5em 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-        section {
-            margin-bottom: 2em;
-            padding: 1em;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
 
-        section:hover {
-            transform: scale(1.02);
-        }
+header p {
+    font-size: 1em;
+    margin: 0.5em 0 0;
+}
 
-        h2 {
-            color: #0073e6;
-            border-bottom: 2px solid #0073e6;
-            padding-bottom: 0.3em;
-            margin-bottom: 1em;
-        }
+section {
+    margin-bottom: 2em;
+    padding: 1em;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
+section:hover {
+    transform: scale(1.02);
+}
 
-        ul li {
-            margin: 0.5em 0;
-        }
+h2 {
+    color: #0073e6;
+    border-bottom: 2px solid #0073e6;
+    padding-bottom: 0.3em;
+    margin-bottom: 1em;
+}
 
-        ul li a {
-            text-decoration: none;
-            color: #0073e6;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
+ul {
+    list-style: none;
+    padding: 0;
+}
 
-        ul li a:hover {
-            color: #ff5722;
-        }
+ul li {
+    margin: 0.5em 0;
+}
 
-        footer {
-            text-align: center;
-            padding: 1em 0;
-            background: #333;
-            color: white;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+ul li a {
+    text-decoration: none;
+    color: #0073e6;
+    font-weight: bold;
+    transition: color 0.3s;
+}
 
-        a {
-            cursor: pointer;
-        }
+ul li a:hover {
+    color: #ff5722;
+}
+
+footer {
+    text-align: center;
+    padding: 1em 0;
+    background: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+a {
+    cursor: pointer;
+}
