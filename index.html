@@ -110,20 +110,33 @@
             alert("No PDF loaded to save.");
             return;
         }
-
+    
         try {
-            const blob = new Blob([pdfData], { type: "application/pdf" });
+            // Ensure the data is not empty
+            console.log("PDF data size:", pdfData.byteLength, "bytes");
+    
+            // Convert the array buffer to a Blob
+            const blob = new Blob([new Uint8Array(pdfData)], { type: "application/pdf" });
+    
+            // Create a download link
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "downloaded_certificate.pdf";
+            link.download = "downloaded_certificate.pdf"; // File name for the saved file
             document.body.appendChild(link);
+    
+            // Trigger download
             link.click();
+    
+            // Clean up the link
             document.body.removeChild(link);
-            console.log("PDF saved successfully.");
+    
+            console.log("PDF successfully downloaded.");
         } catch (error) {
-            console.error("Error saving the PDF:", error);
+            console.error("Error while saving PDF:", error);
         }
     }
+
+    
 
     function prevPage() {
         if (pageNum <= 1) return;
