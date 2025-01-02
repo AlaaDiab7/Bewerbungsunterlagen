@@ -153,15 +153,28 @@ function saveFullPDF() {
         return;
     }
 
-    // Create a Blob from the PDF data and download it
-    const blob = new Blob([pdfData], { type: "application/pdf" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "certificate.pdf"; // Default name for the downloaded file
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+        // Create a Blob from the loaded PDF data
+        const blob = new Blob([pdfData], { type: "application/pdf" });
+
+        // Create a download link
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "certificate.pdf"; // File name for the downloaded PDF
+        document.body.appendChild(link);
+
+        // Trigger the download
+        link.click();
+
+        // Clean up the temporary link
+        document.body.removeChild(link);
+
+        console.log("PDF saved successfully.");
+    } catch (error) {
+        console.error("Error saving the PDF:", error);
+    }
 }
+
 
 
     
