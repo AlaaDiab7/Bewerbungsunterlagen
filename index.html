@@ -78,22 +78,6 @@ let isDragging = false; // Track drag state
 let startX, startY; // Track mouse starting position
 let translateX = 0, translateY = 0; // Track canvas position
 
-    // Save the associated certificate as pdf
-    function saveFullPDF() {
-    if (!pdfData) {
-        alert("No PDF loaded to save.");
-        return;
-    }
-
-    // Create a Blob from the PDF data and download it
-    const blob = new Blob([pdfData], { type: "application/pdf" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "certificate.pdf"; // Default name for the downloaded file
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
 
     
 // Load and render the PDF
@@ -134,6 +118,24 @@ function prevPage() {
     renderPage(pageNum);
 }
 
+// Save the associated certificate as pdf
+function saveFullPDF() {
+    if (!pdfData) {
+        alert("No PDF loaded to save.");
+        return;
+    }
+
+    // Create a Blob from the PDF data and download it
+    const blob = new Blob([pdfData], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "certificate.pdf"; // Default name for the downloaded file
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+    
 // Navigate to the next page
 function nextPage() {
     if (pageNum >= pdfDoc.numPages) return;
