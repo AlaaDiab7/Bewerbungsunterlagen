@@ -46,7 +46,9 @@
         </div>
         <!-- Right-side: PDF Viewer -->
         <div class="preview">
-            <canvas id="pdf-canvas"></canvas>
+            <div class="canvas-wrapper" id="canvas-wrapper">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
             <div class="controls">
                 <button onclick="prevPage()">Zurück</button>
                 <span id="page-info">Seite 1 von 10</span>
