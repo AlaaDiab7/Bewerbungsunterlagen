@@ -68,7 +68,31 @@
     let scale = 1.5; // Default zoom scale
     const canvas = document.getElementById("pdf-canvas");
     const ctx = canvas.getContext("2d");
+let originalPdfData = null; // To store the original buffer
 
+async function loadPDF(url) {
+    try {
+        console.log("Fetching PDF from URL:", url);
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        pdfData = arrayBuffer.slice(0); // Clone the buffer to preserve it
+        originalPdfData = arrayBuffer.slice(0); // Save a separate copy for saving
+
+        console.log("PDF data loaded successfully:", pdfData.byteLength, "bytes");
+
+        pdfDoc = await pdfjsLib.getDocument(pdfData).promise;
+        pageNum = 1;
+        renderPage(pageNum);
+    } catch (error) {
+        console.error("Error loading PDF:", error);
+    }
+}
+
+    /*
     async function loadPDF(url) {
         try {
             console.log("Fetching PDF from URL:", url);
@@ -88,7 +112,8 @@
         } catch (error) {
             console.error("Error loading PDF:", error);
         }
-    }
+    } 
+    */
 
     async function renderPage(num) {
         const page = await pdfDoc.getPage(num);
@@ -106,28 +131,20 @@
     }
 
     function saveFullPDF() {
-        if (!pdfData) {
+        if (!originalPdfData) {
             alert("No PDF loaded to save.");
             return;
         }
     
         try {
-            // Ensure the data is not empty
-            console.log("PDF data size:", pdfData.byteLength, "bytes");
+            console.log("PDF data size:", originalPdfData.byteLength, "bytes");
     
-            // Convert the array buffer to a Blob
-            const blob = new Blob([new Uint8Array(pdfData)], { type: "application/pdf" });
-    
-            // Create a download link
+            const blob = new Blob([new Uint8Array(originalPdfData)], { type: "application/pdf" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "downloaded_certificate.pdf"; // File name for the saved file
+            link.download = "downloaded_certificate.pdf";
             document.body.appendChild(link);
-    
-            // Trigger download
             link.click();
-    
-            // Clean up the link
             document.body.removeChild(link);
     
             console.log("PDF successfully downloaded.");
@@ -135,6 +152,7 @@
             console.error("Error while saving PDF:", error);
         }
     }
+
 
     
 
