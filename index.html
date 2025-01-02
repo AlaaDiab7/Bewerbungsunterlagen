@@ -63,8 +63,8 @@
     </div>
 
 <script type="module">
-    import * as pdfjsLib from './build/pdf.mjs';
-// const pdfjsLib = window["./build/pdf"];
+   // import * as pdfjsLib from './build/pdf.mjs';
+ const pdfjsLib = window["./build/pdf"];
     pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
 
 let pdfDoc = null;
