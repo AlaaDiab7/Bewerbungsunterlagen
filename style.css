@@ -1,5 +1,6 @@
 body {
     display: flex;
+    flex-direction: column; /* Default for smaller screens */
     height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
@@ -8,32 +9,31 @@ body {
 
 .container {
     display: flex;
+    flex-direction: row; /* Default: side-by-side layout */
     width: 100%; /* Ensure the container spans the full width of the page */
+    height: 100%; /* Full height */
 }
 
-.content {
-    flex: 0 0 50%; /* Each section takes 50% of the width */
-    overflow-y: auto;
-    box-sizing: border-box; /* Ensure padding and borders don't affect width */
-}
 /* Left-side (Certificate List) */
 .content {
+    flex: 0 0 50%; /* Default: Take 50% of the width */
     padding: 2em;
+    overflow-y: auto;
+    box-sizing: border-box;
     background-color: #f9f9f9;
     border-right: 2px solid #ddd; /* Add a border between sections */
 }
 
-/* New added style for the zoom option */
 /* Right-side (PDF Viewer) */
 .preview {
-    flex: 0 0 50%; /* Fixed 50% width */
+    flex: 0 0 50%; /* Default: Fixed 50% width */
     background-color: white;
     border-left: 2px solid #ddd;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    position: relative; /* To enable absolute positioning for canvas */
+    position: relative;
     overflow: hidden; /* Prevent content overflow */
 }
 
@@ -48,27 +48,14 @@ body {
 
 /* Canvas Styling */
 .preview canvas {
-    position: absolute; /* Enable movement within the container */
+    position: absolute;
     top: 0;
     left: 0;
     transform-origin: top left; /* Ensure proper zooming */
-    cursor: move; /* Change cursor on drag */
+    cursor: move;
     border: 1px solid #ccc;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-
-/* end of added part */
-
-
-
-
-
-
-
-
-
-
-
 
 /* Navigation Controls */
 .controls {
@@ -93,7 +80,6 @@ body {
     background-color: #005bb5;
 }
 
-/* ---------------------------------------------------- */
 /* Header Styling */
 header {
     background: linear-gradient(135deg, #4a90e2, #0073e6);
@@ -169,4 +155,43 @@ footer {
 
 a {
     cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack sections vertically */
+    }
+
+    .content, .preview {
+        flex: 0 0 auto; /* Remove fixed widths */
+        width: 100%; /* Full width for both sections */
+        height: auto; /* Adjust height automatically */
+        border: none; /* Remove side borders */
+    }
+
+    .preview {
+        margin-top: 1em; /* Add spacing between sections */
+    }
+
+    .canvas-wrapper {
+        height: 300px; /* Limit height of the canvas viewer on small screens */
+    }
+
+    header h1 {
+        font-size: 1.5em; /* Adjust font size for smaller screens */
+    }
+
+    header p {
+        font-size: 0.9em;
+    }
+
+    .controls button {
+        font-size: 0.9em; /* Adjust button size for small screens */
+        padding: 0.4em 0.8em;
+    }
+
+    h2 {
+        font-size: 1.2em; /* Adjust section title size */
+    }
 }
