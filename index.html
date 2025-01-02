@@ -50,6 +50,7 @@
                 <canvas id="pdf-canvas"></canvas>
             </div>
             <div class="controls">
+                <button onclick="saveFullPDF()">Zertifikat unterladen</button>
                 <button onclick="prevPage()">Zurück</button>
                 <span id="page-info">Seite 1 von 10</span>
                 <button onclick="nextPage()">Weiter</button>
@@ -77,6 +78,24 @@ let isDragging = false; // Track drag state
 let startX, startY; // Track mouse starting position
 let translateX = 0, translateY = 0; // Track canvas position
 
+    // Save the associated certificate as pdf
+    function saveFullPDF() {
+    if (!pdfData) {
+        alert("No PDF loaded to save.");
+        return;
+    }
+
+    // Create a Blob from the PDF data and download it
+    const blob = new Blob([pdfData], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "certificate.pdf"; // Default name for the downloaded file
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+    
 // Load and render the PDF
 async function loadPdf(url) {
     const pdf = await pdfjsLib.getDocument(url).promise;
