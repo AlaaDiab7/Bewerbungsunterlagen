@@ -47,6 +47,9 @@
             <div class="canvas-wrapper" id="canvas-wrapper">
                 <canvas id="pdf-canvas"></canvas>
             </div>
+            <div class="placeholder" id="placeholder">
+                <p>Wählen Sie ein Zertifikat aus, um es hier zu sehen.</p>
+            </div>
             <div class="controls">
                 <button onclick="saveFullPDF()">Zertifikat unterladen</button>
                 <button onclick="prevPage()">Zurück</button>
@@ -70,6 +73,8 @@
     const ctx = canvas.getContext("2d");
 let originalPdfData = null; // To store the original buffer
 
+
+        /*
 async function loadPDF(url) {
     try {
         console.log("Fetching PDF from URL:", url);
@@ -91,7 +96,36 @@ async function loadPDF(url) {
         console.error("Error loading PDF:", error);
     }
 }
+*/
+//------------------
+function loadPDF(url) {
+    try {
+        document.getElementById("placeholder").style.display = "none"; // Hide placeholder
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const arrayBuffer = await response.arrayBuffer();
+        pdfData = arrayBuffer.slice(0);
+        originalPdfData = arrayBuffer.slice(0);
+        pdfDoc = await pdfjsLib.getDocument(pdfData).promise;
+        pageNum = 1;
+        renderPage(pageNum);
+    } catch (error) {
+        console.error("Error loading PDF:", error);
+    }
+}
 
+// Add this to reset the view when no certificate is loaded
+function resetPreview() {
+    const placeholder = document.getElementById("placeholder");
+    placeholder.style.display = "flex"; // Show placeholder
+    const canvasWrapper = document.getElementById("canvas-wrapper");
+    canvasWrapper.style.display = "none"; // Hide canvas wrapper
+}
+
+//---------------
+
+
+    
     /*
     async function loadPDF(url) {
         try {
@@ -184,6 +218,7 @@ async function loadPDF(url) {
         loadPDF(url);
     }
 
+    window.loadPDF = loadPDF;
     window.prevPage = prevPage;
     window.nextPage = nextPage;
     window.zoomIn = zoomIn;
