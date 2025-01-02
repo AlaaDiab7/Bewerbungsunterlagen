@@ -64,7 +64,7 @@
 
 <script type="module">
     import * as pdfjsLib from './build/pdf.mjs';
-//const pdfjsLib = window["pdfjs-dist/build/pdf"];
+const pdfjsLib = window["./build/pdf"];
     pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
 
 let pdfDoc = null;
@@ -87,24 +87,31 @@ let translateX = 0, translateY = 0; // Track canvas position
     pdfDoc = pdf;
     renderPage(pageNum);
 } */
+
+// Load the pdf into the review using the url of the file 
 async function loadPDF(url) {
     try {
-        // Fetch the PDF file as binary data
+        console.log("Fetching PDF from URL:", url); // Debugging
         const response = await fetch(url);
-        pdfData = await response.arrayBuffer(); // Save the raw binary data for later download
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-        // Load the PDF document with pdf.js
+        pdfData = await response.arrayBuffer(); // Save the binary data
+        console.log("PDF data loaded successfully:", pdfData);
+
+        // Load the PDF document
         pdfDoc = await pdfjsLib.getDocument(pdfData).promise;
 
         // Render the first page
         pageNum = 1;
         renderPage(pageNum);
-        console.log("Loaded PDF Data:", pdfData);
-        
     } catch (error) {
         console.error("Error loading PDF:", error);
     }
 }
+
 
     
 
