@@ -58,174 +58,108 @@
         </div>
     </div>
 
-    <script type="module">
-        import * as pdfjsLib from './build/pdf.mjs';
-        pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
+<script type="module">
+    import * as pdfjsLib from './build/pdf.mjs';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
 
-        let pdfDoc = null;
-        let pdfData = null; // Global variable to store the raw PDF data
-        let pageNum = 1;
-        let scale = 1.5; // Default zoom scale
-        const canvas = document.getElementById("pdf-canvas");
-        const ctx = canvas.getContext("2d");
-        const canvasWrapper = document.getElementById("canvas-wrapper");
+    let pdfDoc = null;
+    let pdfData = null; // Global variable to store the raw PDF data
+    let pageNum = 1;
+    let scale = 1.5; // Default zoom scale
+    const canvas = document.getElementById("pdf-canvas");
+    const ctx = canvas.getContext("2d");
 
-        let isDragging = false; // Track drag state
-        let startX, startY; // Track mouse starting position
-        let translateX = 0, translateY = 0; // Track canvas position
+    async function loadPDF(url) {
+        try {
+            console.log("Fetching PDF from URL:", url);
+            const response = await fetch(url);
 
-        // Load and render the PDF
-        async function loadPDF(url) {
-            try {
-                console.log("Fetching PDF from URL:", url); // Debugging
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                pdfData = await response.arrayBuffer(); // Save the binary data
-                console.log("PDF data loaded successfully:", pdfData);
-
-                // Load the PDF document
-                pdfDoc = await pdfjsLib.getDocument(pdfData).promise;
-
-                // Render the first page
-                pageNum = 1;
-                renderPage(pageNum);
-            } catch (error) {
-                console.error("Error loading PDF:", error);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+
+            pdfData = await response.arrayBuffer(); // Save the binary data
+            console.log("PDF data loaded successfully:", pdfData.byteLength, "bytes");
+
+            pdfDoc = await pdfjsLib.getDocument(pdfData).promise;
+
+            pageNum = 1;
+            renderPage(pageNum);
+        } catch (error) {
+            console.error("Error loading PDF:", error);
+        }
+    }
+
+    async function renderPage(num) {
+        const page = await pdfDoc.getPage(num);
+        const viewport = page.getViewport({ scale });
+
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        await page.render(renderContext).promise;
+        document.getElementById("page-info").textContent = `Seite ${pageNum} von ${pdfDoc.numPages}`;
+    }
+
+    function saveFullPDF() {
+        if (!pdfData) {
+            alert("No PDF loaded to save.");
+            return;
         }
 
-        // Render a page with the current scale
-        async function renderPage(num) {
-            const page = await pdfDoc.getPage(num);
-            const viewport = page.getViewport({ scale });
-
-            // Resize the canvas to match the viewport
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-
-            const renderContext = {
-                canvasContext: ctx,
-                viewport: viewport
-            };
-            await page.render(renderContext).promise;
-
-            // Center the canvas in the container
-            translateX = 0;
-            translateY = 0;
-            updateCanvasTransform();
-
-            // Update page info
-            document.getElementById("page-info").textContent = `Seite ${pageNum} von ${pdfDoc.numPages}`;
+        try {
+            const blob = new Blob([pdfData], { type: "application/pdf" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "downloaded_certificate.pdf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            console.log("PDF saved successfully.");
+        } catch (error) {
+            console.error("Error saving the PDF:", error);
         }
+    }
 
-        // Navigate to the previous page
-        function prevPage() {
-            if (pageNum <= 1) return;
-            pageNum--;
+    function prevPage() {
+        if (pageNum <= 1) return;
+        pageNum--;
+        renderPage(pageNum);
+    }
+
+    function nextPage() {
+        if (pageNum >= pdfDoc.numPages) return;
+        pageNum++;
+        renderPage(pageNum);
+    }
+
+    function zoomIn() {
+        scale += 0.25;
+        renderPage(pageNum);
+    }
+
+    function zoomOut() {
+        if (scale > 0.5) {
+            scale -= 0.25;
             renderPage(pageNum);
         }
+    }
 
-        // Save the associated certificate as PDF
-        function saveFullPDF() {
-            if (!pdfData) {
-                alert("No PDF loaded to save.");
-                return;
-            }
+    function selectCertificate(url) {
+        loadPDF(url);
+    }
 
-            try {
-                // Create a Blob from the loaded PDF data
-                const blob = new Blob([pdfData], { type: "application/pdf" });
+    window.prevPage = prevPage;
+    window.nextPage = nextPage;
+    window.zoomIn = zoomIn;
+    window.zoomOut = zoomOut;
+    window.saveFullPDF = saveFullPDF;
+    window.selectCertificate = selectCertificate;
+</script>
 
-                // Create a download link
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = "certificate.pdf"; // File name for the downloaded PDF
-                document.body.appendChild(link);
-
-                // Trigger the download
-                link.click();
-
-                // Clean up the temporary link
-                document.body.removeChild(link);
-
-                console.log("PDF saved successfully.");
-            } catch (error) {
-                console.error("Error saving the PDF:", error);
-            }
-        }
-
-        // Navigate to the next page
-        function nextPage() {
-            if (pageNum >= pdfDoc.numPages) return;
-            pageNum++;
-            renderPage(pageNum);
-        }
-
-        // Zoom in by increasing the scale
-        function zoomIn() {
-            scale += 0.25; // Increase the scale factor
-            renderPage(pageNum); // Re-render the current page
-        }
-
-        // Zoom out by decreasing the scale
-        function zoomOut() {
-            if (scale > 0.5) {
-                scale -= 0.25; // Decrease the scale factor
-                renderPage(pageNum); // Re-render the current page
-            }
-        }
-
-        // Update the canvas transform for zoom and drag
-        function updateCanvasTransform() {
-            canvas.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-        }
-
-        // Handle drag start
-        canvasWrapper.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            startX = e.clientX - translateX;
-            startY = e.clientY - translateY;
-            canvasWrapper.style.cursor = "grabbing";
-        });
-
-        // Handle drag move
-        canvasWrapper.addEventListener("mousemove", (e) => {
-            if (isDragging) {
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateCanvasTransform();
-            }
-        });
-
-        // Handle drag end
-        canvasWrapper.addEventListener("mouseup", () => {
-            isDragging = false;
-            canvasWrapper.style.cursor = "grab";
-        });
-
-        // Prevent drag state from persisting if the mouse leaves the wrapper
-        canvasWrapper.addEventListener("mouseleave", () => {
-            isDragging = false;
-            canvasWrapper.style.cursor = "grab";
-        });
-
-        /* Select the certificate when the user clicks on one certificate, 
-        to be able to be saved later if required*/
-        function selectCertificate(url) {
-            loadPDF(url); // Load the selected certificate's PDF
-        }
-
-        // Expose functions globally
-        window.prevPage = prevPage;
-        window.nextPage = nextPage;
-        window.zoomIn = zoomIn;
-        window.zoomOut = zoomOut;
-        window.saveFullPDF = saveFullPDF;
-        window.selectCertificate = selectCertificate;
-    </script>
 </body>
 </html>
