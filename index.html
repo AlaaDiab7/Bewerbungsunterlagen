@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mein Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="https://github.com/AlaaDiab7/Bewerbungsunterlagen/blob/main/favicon.ico">
 </head>
 <body>
     <div class="container">
@@ -40,16 +39,13 @@
                         <li><a href="#" onmouseover="previewCertificate('pub2.pdf')">Publikation 2</a></li>
                     </ul>
                 </section>
-                
+
             </main>
         </div>
         <!-- Right-side: PDF Viewer -->
         <div class="preview">
             <div class="canvas-wrapper" id="canvas-wrapper">
                 <canvas id="pdf-canvas"></canvas>
-            </div>
-            <div class="placeholder" id="placeholder">
-                <p>Wählen Sie ein Zertifikat aus, um es hier zu sehen.</p>
             </div>
             <div class="controls">
                 <button onclick="saveFullPDF()">Zertifikat unterladen</button>
@@ -73,9 +69,6 @@
     const canvas = document.getElementById("pdf-canvas");
     const ctx = canvas.getContext("2d");
 let originalPdfData = null; // To store the original buffer
-
-
-        /*
 async function loadPDF(url) {
     try {
         console.log("Fetching PDF from URL:", url);
@@ -83,30 +76,10 @@ async function loadPDF(url) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const arrayBuffer = await response.arrayBuffer();
         pdfData = arrayBuffer.slice(0); // Clone the buffer to preserve it
         originalPdfData = arrayBuffer.slice(0); // Save a separate copy for saving
-
         console.log("PDF data loaded successfully:", pdfData.byteLength, "bytes");
-
-        pdfDoc = await pdfjsLib.getDocument(pdfData).promise;
-        pageNum = 1;
-        renderPage(pageNum);
-    } catch (error) {
-        console.error("Error loading PDF:", error);
-    }
-}
-*/
-//------------------
-async function loadPDF(url) {
-    try {
-        document.getElementById("placeholder").style.display = "none"; // Hide placeholder
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const arrayBuffer = await response.arrayBuffer();
-        pdfData = arrayBuffer.slice(0);
-        originalPdfData = arrayBuffer.slice(0);
         pdfDoc = await pdfjsLib.getDocument(pdfData).promise;
         pageNum = 1;
         renderPage(pageNum);
@@ -115,33 +88,17 @@ async function loadPDF(url) {
     }
 }
 
-// Add this to reset the view when no certificate is loaded
-function resetPreview() {
-    const placeholder = document.getElementById("placeholder");
-    placeholder.style.display = "flex"; // Show placeholder
-    const canvasWrapper = document.getElementById("canvas-wrapper");
-    canvasWrapper.style.display = "none"; // Hide canvas wrapper
-}
-
-//---------------
-
-
-    
     /*
     async function loadPDF(url) {
         try {
             console.log("Fetching PDF from URL:", url);
             const response = await fetch(url);
-
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
             pdfData = await response.arrayBuffer(); // Save the binary data
             console.log("PDF data loaded successfully:", pdfData.byteLength, "bytes");
-
             pdfDoc = await pdfjsLib.getDocument(pdfData).promise;
-
             pageNum = 1;
             renderPage(pageNum);
         } catch (error) {
@@ -170,10 +127,10 @@ function resetPreview() {
             alert("No PDF loaded to save.");
             return;
         }
-    
+
         try {
             console.log("PDF data size:", originalPdfData.byteLength, "bytes");
-    
+
             const blob = new Blob([new Uint8Array(originalPdfData)], { type: "application/pdf" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
@@ -181,7 +138,7 @@ function resetPreview() {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-    
+
             console.log("PDF successfully downloaded.");
         } catch (error) {
             console.error("Error while saving PDF:", error);
@@ -189,7 +146,6 @@ function resetPreview() {
     }
 
 
-    
 
     function prevPage() {
         if (pageNum <= 1) return;
@@ -219,7 +175,6 @@ function resetPreview() {
         loadPDF(url);
     }
 
-    // window.loadPDF = loadPDF;
     window.prevPage = prevPage;
     window.nextPage = nextPage;
     window.zoomIn = zoomIn;
