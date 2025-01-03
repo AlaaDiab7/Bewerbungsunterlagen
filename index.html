@@ -66,10 +66,15 @@
     let pdfData = null; // Global variable to store the raw PDF data
     let pageNum = 1;
     let scale = 1.5; // Default zoom scale
+
+    let isDragging = false;
+    let startX, startY, offsetX, offsetY;
+    
     // Add event listeners to handle dragging
     const canvas = document.getElementById("pdf-canvas");
     const ctx = canvas.getContext("2d");
-let originalPdfData = null; // To store the original buffer
+    
+    let originalPdfData = null; // To store the original buffer
 
     let isDragging = false;
     let offsetX, offsetY;
@@ -209,12 +214,63 @@ async function loadPDF(url) {
         loadPDF(url);
     }
 
+    // Function to start dragging (for both mouse and touch)
+    function startDrag(event) {
+        event.preventDefault(); // Prevent scrolling on touch devices
+        isDragging = true;
+
+        // Use touch events if available
+        const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+        const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+
+        startX = clientX;
+        startY = clientY;
+        offsetX = canvas.offsetLeft;
+        offsetY = canvas.offsetTop;
+
+        canvas.style.cursor = 'grabbing';
+    }
+
+    // Function to drag the canvas (for both mouse and touch)
+    function drag(event) {
+        if (!isDragging) return;
+
+        // Use touch events if available
+        const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+        const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+
+        canvas.style.left = `${offsetX + dx}px`;
+        canvas.style.top = `${offsetY + dy}px`;
+    }
+
+    // Function to stop dragging (for both mouse and touch)
+    function stopDrag() {
+        isDragging = false;
+        canvas.style.cursor = 'move';
+    }
+
+    // Add event listeners for mouse and touch events
+    canvas.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', stopDrag);
+
+    canvas.addEventListener('touchstart', startDrag);
+    document.addEventListener('touchmove', drag);
+    document.addEventListener('touchend', stopDrag);
+    
+
     window.prevPage = prevPage;
     window.nextPage = nextPage;
     window.zoomIn = zoomIn;
     window.zoomOut = zoomOut;
     window.saveFullPDF = saveFullPDF;
     window.selectCertificate = selectCertificate;
+    window.startDrag = startDrag;
+    window.drag = drag;
+    window.stopDrag = stopDrag;
 </script>
 
 </body>
