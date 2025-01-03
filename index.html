@@ -212,9 +212,20 @@ async function loadPDF(url) {
 
         const dx = clientX - startX;
         const dy = clientY - startY;
-
-        canvas.style.left = `${offsetX + dx}px`;
-        canvas.style.top = `${offsetY + dy}px`;
+        
+     // For limiting the movement of the canvas in its boundary:
+    const container = document.querySelector('.canvas-wrapper');
+    const containerRect = container.getBoundingClientRect();
+    
+    const newLeft = Math.min(Math.max(offsetX + dx, 0), containerRect.width - canvas.offsetWidth);
+    const newTop = Math.min(Math.max(offsetY + dy, 0), containerRect.height - canvas.offsetHeight);
+    
+    canvas.style.left = `${newLeft}px`;
+    canvas.style.top = `${newTop}px`;
+        
+        
+       // canvas.style.left = `${offsetX + dx}px`;
+       // canvas.style.top = `${offsetY + dy}px`;
     }
 
     // Function to stop dragging (for both mouse and touch)
@@ -224,15 +235,7 @@ async function loadPDF(url) {
     }
   
 
-    // For limiting the movement of the canvas in its boundary:
-    const container = document.querySelector('.canvas-wrapper');
-    const containerRect = container.getBoundingClientRect();
-    
-    const newLeft = Math.min(Math.max(offsetX + dx, 0), containerRect.width - canvas.offsetWidth);
-    const newTop = Math.min(Math.max(offsetY + dy, 0), containerRect.height - canvas.offsetHeight);
-    
-    canvas.style.left = `${newLeft}px`;
-    canvas.style.top = `${newTop}px`;
+   
 
 
     
