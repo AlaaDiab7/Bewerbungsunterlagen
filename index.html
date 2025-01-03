@@ -66,6 +66,7 @@
     let pdfData = null; // Global variable to store the raw PDF data
     let pageNum = 1;
     let scale = 1.5; // Default zoom scale
+    // Add event listeners to handle dragging
     const canvas = document.getElementById("pdf-canvas");
     const ctx = canvas.getContext("2d");
 let originalPdfData = null; // To store the original buffer
@@ -96,9 +97,6 @@ let originalPdfData = null; // To store the original buffer
         isDragging = false;
         canvas.style.cursor = 'move';  // Change cursor back to move when dragging stops
     }
-
-    // Add event listeners to handle dragging
-    const canvas = document.getElementById('pdf-canvas');
 
     canvas.addEventListener('mousedown', startDrag);
     document.addEventListener('mousemove', drag);
