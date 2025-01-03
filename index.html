@@ -252,6 +252,19 @@ async function loadPDF(url) {
         canvas.style.cursor = 'move';
     }
 
+
+    // For limiting the movement of the canvas in its boundary:
+    const container = document.querySelector('.canvas-wrapper');
+    const containerRect = container.getBoundingClientRect();
+    
+    const newLeft = Math.min(Math.max(offsetX + dx, 0), containerRect.width - canvas.offsetWidth);
+    const newTop = Math.min(Math.max(offsetY + dy, 0), containerRect.height - canvas.offsetHeight);
+    
+    canvas.style.left = `${newLeft}px`;
+    canvas.style.top = `${newTop}px`;
+
+
+    
     // Add event listeners for mouse and touch events
     canvas.addEventListener('mousedown', startDrag);
     document.addEventListener('mousemove', drag);
