@@ -41,7 +41,7 @@ body {
 .canvas-wrapper {
     width: 100%;
     height: 100%;
-    overflow: auto; /* Allow scrolling if content overflows */
+    overflow: hidden; /* Ensure no overflow outside of the container */
     position: relative;
     cursor: grab; /* Indicate draggable area */
 }
@@ -52,9 +52,14 @@ body {
     top: 0;
     left: 0;
     transform-origin: top left; /* Ensure proper zooming */
-    cursor: move;
+    cursor: move; /* Indicate that the canvas is draggable */
     border: 1px solid #ccc;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* For when the canvas is being dragged */
+.preview canvas:active {
+    cursor: grabbing; /* Change cursor when dragging */
 }
 
 /* Navigation Controls */
