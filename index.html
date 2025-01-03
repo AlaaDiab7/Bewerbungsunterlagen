@@ -76,33 +76,7 @@
     
     let originalPdfData = null; // To store the original buffer
 
-    // Function to start dragging
-    function startDrag(event) {
-        isDragging = true;
-        offsetX = event.clientX - canvas.offsetLeft;
-        offsetY = event.clientY - canvas.offsetTop;
-        canvas.style.cursor = 'grabbing';  // Change cursor to grabbing when dragging starts
-    }
-
-    // Function to drag the canvas
-    function drag(event) {
-        if (isDragging) {
-            let x = event.clientX - offsetX;
-            let y = event.clientY - offsetY;
-            canvas.style.left = `${x}px`;
-            canvas.style.top = `${y}px`;
-        }
-    }
-
-    // Function to stop dragging
-    function stopDrag() {
-        isDragging = false;
-        canvas.style.cursor = 'move';  // Change cursor back to move when dragging stops
-    }
-
-    canvas.addEventListener('mousedown', startDrag);
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', stopDrag);
+    
     
     
 async function loadPDF(url) {
@@ -248,7 +222,7 @@ async function loadPDF(url) {
         isDragging = false;
         canvas.style.cursor = 'move';
     }
-
+  
 
     // For limiting the movement of the canvas in its boundary:
     const container = document.querySelector('.canvas-wrapper');
