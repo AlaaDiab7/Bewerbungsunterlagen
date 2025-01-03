@@ -212,7 +212,8 @@ async function loadPDF(url) {
 
         const dx = clientX - startX;
         const dy = clientY - startY;
-        
+
+        /*
      // For limiting the movement of the canvas in its boundary:
     const container = document.querySelector('.canvas-wrapper');
     const containerRect = container.getBoundingClientRect();
@@ -222,10 +223,10 @@ async function loadPDF(url) {
     
     canvas.style.left = `${newLeft}px`;
     canvas.style.top = `${newTop}px`;
+        */
         
-        
-       // canvas.style.left = `${offsetX + dx}px`;
-       // canvas.style.top = `${offsetY + dy}px`;
+        canvas.style.left = `${offsetX + dx}px`;
+        canvas.style.top = `${offsetY + dy}px`;
     }
 
     // Function to stop dragging (for both mouse and touch)
