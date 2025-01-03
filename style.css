@@ -29,6 +29,7 @@ body {
     flex: 0 0 50%; /* Default: Fixed 50% width */
     background-color: white;
     border-left: 2px solid #ddd;
+    border-right: 2px solid #ddd;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -40,7 +41,7 @@ body {
 /* Canvas Wrapper to allow dragging */
 .canvas-wrapper {
     width: 100%;
-    height: 100%;
+    height: 85%;
     overflow: hidden; /* Ensure no overflow outside of the container */
     position: relative;
     cursor: grab; /* Indicate draggable area */
