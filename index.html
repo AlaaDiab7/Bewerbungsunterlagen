@@ -98,7 +98,7 @@ async function loadPDF(url) {
 }
 */
 //------------------
-function loadPDF(url) {
+async function loadPDF(url) {
     try {
         document.getElementById("placeholder").style.display = "none"; // Hide placeholder
         const response = await fetch(url);
@@ -218,7 +218,7 @@ function resetPreview() {
         loadPDF(url);
     }
 
-    window.loadPDF = loadPDF;
+    // window.loadPDF = loadPDF;
     window.prevPage = prevPage;
     window.nextPage = nextPage;
     window.zoomIn = zoomIn;
