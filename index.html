@@ -20,7 +20,7 @@
                     <ul id="certificate-list">
                         <li><a href="#" onclick="selectCertificate('https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Zeugnisse_Alaa_Diab.pdf')">Uni Zeugnisse</a></li>
                         <li><a href="#" onclick="selectCertificate('https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Programming_certificates.pdf')">Programmier-Zertifikate</a></li>
-                        <li><a href="#" onclick="selectCertificate('https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Zeugnisse_Alaa_Diab.pdf')">Simulation Zertifikate</a></li>
+                        <li><a href="#" onclick="selectCertificate('https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/AutoCAD 2D_3D.pdf')">Simulation Zertifikate</a></li>
                     </ul>
                 </section>
 
@@ -52,8 +52,8 @@
                 <button onclick="prevPage()">Zurück</button>
                 <span id="page-info">Seite 1 von 10</span>
                 <button onclick="nextPage()">Weiter</button>
-                <button onclick="zoomIn()">Zoom In</button>
-                <button onclick="zoomOut()">Zoom Out</button>
+                <button onclick="zoomIn()"> + </button>
+                <button onclick="zoomOut()"> - </button>
             </div>
         </div>
     </div>
@@ -236,10 +236,7 @@ async function loadPDF(url) {
     }
   
 
-   
-
-
-    
+      
     // Add event listeners for mouse and touch events
     canvas.addEventListener('mousedown', startDrag);
     document.addEventListener('mousemove', drag);
