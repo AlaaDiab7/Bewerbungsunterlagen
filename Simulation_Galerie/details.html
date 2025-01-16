@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details - Simulationsmodell</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Details zum Simulationsmodell</h1>
+    </header>
+    <main>
+        <section class="details">
+            <h2 id="model-name"></h2>
+            <p id="model-description"></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Alaa Diab Simulation Galerie</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const modelName = urlParams.get('model');
+            document.getElementById('model-name').innerText = modelName;
+
+            fetch(`details/${modelName}.txt`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('model-description').innerText = data;
+                })
+                .catch(err => {
+                    document.getElementById('model-description').innerText = 'Keine Details verfügbar.';
+                });
+        });
+    </script>
+</body>
+</html>
