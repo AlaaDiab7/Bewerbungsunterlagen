@@ -1,0 +1,1 @@
+This model is done to show the dimensional view of a table model and the material settings
