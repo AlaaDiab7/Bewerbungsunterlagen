@@ -1,0 +1,1 @@
+This is a basic model to demonstrate the necessary techniques required for modeling the outer surface of a house 
