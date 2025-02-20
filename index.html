@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alaa Diab Karriere-Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -62,12 +64,12 @@
                 <canvas id="pdf-canvas"></canvas>
             </div>
             <div class="controls">
-                <button onclick="saveFullPDF()">Zertifikat unterladen</button>
-                <button onclick="prevPage()">Zurück</button>
+                <button onclick="saveFullPDF()"><i class="fa-solid fa-file-arrow-down"></i></button>
+                <button onclick="prevPage()"><i class="fa-solid fa-arrow-left"></i></button>
                 <span id="page-info">Seite 1 von 10</span>
-                <button onclick="nextPage()">Weiter</button>
-                <button onclick="zoomIn()"> + </button>
-                <button onclick="zoomOut()"> - </button>
+                <button onclick="nextPage()"><i class="fa-solid fa-arrow-right"></i></button>
+                <button onclick="zoomIn()"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                <button onclick="zoomOut()"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
             </div>
         </div>
     </div>
