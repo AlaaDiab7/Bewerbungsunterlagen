@@ -251,7 +251,20 @@ async function loadPDF(url) {
         canvas.style.cursor = 'move';
     }
   
-
+    // Start of added part for scrolling up and down that zooms in and out
+    // Function to handle zooming with mouse scroll
+    document.getElementById("canvas-wrapper").addEventListener("wheel", function (event) {
+        event.preventDefault(); // Prevent default scrolling behavior
+    
+        if (event.deltaY < 0) {
+            // Scrolling up → Zoom In
+            zoomIn();
+        } else {
+            // Scrolling down → Zoom Out
+            zoomOut();
+        }
+    });
+    // end of added part for scrolling up and down that zooms in and out
       
     // Add event listeners for mouse and touch events
     canvas.addEventListener('mousedown', startDrag);
