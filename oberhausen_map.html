@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4f2acc5ca3c066b5029ce8f318f3ccdc {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_4f2acc5ca3c066b5029ce8f318f3ccdc" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_4f2acc5ca3c066b5029ce8f318f3ccdc = L.map(
+                "map_4f2acc5ca3c066b5029ce8f318f3ccdc",
+                {
+                    center: [51.4963, 6.8638],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_1ec5853eaeb7b7ff7408a7407e595ae9 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_1ec5853eaeb7b7ff7408a7407e595ae9.addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            var marker_aa31bdd8666ff7755cc780b835df34f9 = L.marker(
+                [51.4344, 6.7623],
+                {
+}
+            ).addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            var icon_f4c9f36a547bfa73a32f67e27481591f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d4a8aeeedd37d6121202420956c5cc31 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a70825b2eaf81886852abb2b0777e478 = $(`<div id="html_a70825b2eaf81886852abb2b0777e478" style="width: 100.0%; height: 100.0%;">Quarry A (Duisburg)</div>`)[0];
+                popup_d4a8aeeedd37d6121202420956c5cc31.setContent(html_a70825b2eaf81886852abb2b0777e478);
+            
+        
+
+        marker_aa31bdd8666ff7755cc780b835df34f9.bindPopup(popup_d4a8aeeedd37d6121202420956c5cc31)
+        ;
+
+        
+    
+    
+                marker_aa31bdd8666ff7755cc780b835df34f9.setIcon(icon_f4c9f36a547bfa73a32f67e27481591f);
+            
+    
+            var marker_074609336825c2d1f72ab36d5853e2ea = L.marker(
+                [51.4566, 7.0123],
+                {
+}
+            ).addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            var icon_9fad6d0a2634a00169d72b6a9677665e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4c1ca2ccfec4bfcd34fa59fc2dbf7d6c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2a0f19e90ec0800f4c5bbe6058b79878 = $(`<div id="html_2a0f19e90ec0800f4c5bbe6058b79878" style="width: 100.0%; height: 100.0%;">Steel Plant B (Essen)</div>`)[0];
+                popup_4c1ca2ccfec4bfcd34fa59fc2dbf7d6c.setContent(html_2a0f19e90ec0800f4c5bbe6058b79878);
+            
+        
+
+        marker_074609336825c2d1f72ab36d5853e2ea.bindPopup(popup_4c1ca2ccfec4bfcd34fa59fc2dbf7d6c)
+        ;
+
+        
+    
+    
+                marker_074609336825c2d1f72ab36d5853e2ea.setIcon(icon_9fad6d0a2634a00169d72b6a9677665e);
+            
+    
+            var marker_aff2221b9b9c0e0e5522e85236ffe4f5 = L.marker(
+                [51.2277, 6.7735],
+                {
+}
+            ).addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            var icon_d4f636fc31415f9eff4bd3e8272ccef7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bf738e2ea443c0e647dbc781fbb0fe95 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d04b38d74ea59edf4cae5face5e6520c = $(`<div id="html_d04b38d74ea59edf4cae5face5e6520c" style="width: 100.0%; height: 100.0%;">Cement Factory C (Düsseldorf)</div>`)[0];
+                popup_bf738e2ea443c0e647dbc781fbb0fe95.setContent(html_d04b38d74ea59edf4cae5face5e6520c);
+            
+        
+
+        marker_aff2221b9b9c0e0e5522e85236ffe4f5.bindPopup(popup_bf738e2ea443c0e647dbc781fbb0fe95)
+        ;
+
+        
+    
+    
+                marker_aff2221b9b9c0e0e5522e85236ffe4f5.setIcon(icon_d4f636fc31415f9eff4bd3e8272ccef7);
+            
+    
+            var marker_7e78527fe58315539d23255c1621e7ee = L.marker(
+                [51.4963, 6.8638],
+                {
+}
+            ).addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            var icon_48f6cc5d84251566ec364198abe5b85c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bc99551ac78291795c7d7ac8d679d33e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bcba1e27798fb3fd2c04e1ac103d636e = $(`<div id="html_bcba1e27798fb3fd2c04e1ac103d636e" style="width: 100.0%; height: 100.0%;">Project Site (Oberhausen)</div>`)[0];
+                popup_bc99551ac78291795c7d7ac8d679d33e.setContent(html_bcba1e27798fb3fd2c04e1ac103d636e);
+            
+        
+
+        marker_7e78527fe58315539d23255c1621e7ee.bindPopup(popup_bc99551ac78291795c7d7ac8d679d33e)
+        ;
+
+        
+    
+    
+                marker_7e78527fe58315539d23255c1621e7ee.setIcon(icon_48f6cc5d84251566ec364198abe5b85c);
+            
+    
+            var poly_line_82f7e3201ab4ccce1857ae0c551cd2fe = L.polyline(
+                [[51.4344, 6.7623], [51.4963, 6.8638]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            var poly_line_56e1ec586e4a23098cc9bed92ae646d2 = L.polyline(
+                [[51.4566, 7.0123], [51.4963, 6.8638]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            var poly_line_ac66a581f2a8d419411d89b5f89180f0 = L.polyline(
+                [[51.2277, 6.7735], [51.4963, 6.8638]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            var heat_map_e708c13fe6a15165d0486b3b516a975f = L.heatLayer(
+                [[51.5, 6.86], [51.49, 6.87], [51.48, 6.85], [51.47, 6.88], [51.495, 6.865], [51.485, 6.875]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 25,
+  "blur": 15,
+}
+            );
+        
+    
+            heat_map_e708c13fe6a15165d0486b3b516a975f.addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+            tile_layer_1ec5853eaeb7b7ff7408a7407e595ae9.addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+    
+                marker_aa31bdd8666ff7755cc780b835df34f9.setIcon(icon_f4c9f36a547bfa73a32f67e27481591f);
+            
+    
+                marker_074609336825c2d1f72ab36d5853e2ea.setIcon(icon_9fad6d0a2634a00169d72b6a9677665e);
+            
+    
+                marker_aff2221b9b9c0e0e5522e85236ffe4f5.setIcon(icon_d4f636fc31415f9eff4bd3e8272ccef7);
+            
+    
+                marker_7e78527fe58315539d23255c1621e7ee.setIcon(icon_48f6cc5d84251566ec364198abe5b85c);
+            
+    
+            heat_map_e708c13fe6a15165d0486b3b516a975f.addTo(map_4f2acc5ca3c066b5029ce8f318f3ccdc);
+        
+</script>
+</html>
