@@ -4,4 +4,44 @@
     <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/</loc>
     <priority>1.0</priority>
   </url>
+
+  <url>
+    <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/Simulation_Galerie/</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Lebenslauf_Alaa_Diab.pdf</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Zeugnisse_Alaa_Diab.pdf</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Programming_certificates.pdf</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/CAD_Certificate.pdf</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Empfehlungen.pdf</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/certificates/Arbeitszeugnis.pdf</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://alaadiab7.github.io/Bewerbungsunterlagen/preview.png</loc>
+    <priority>0.4</priority>
+  </url>
 </urlset>
